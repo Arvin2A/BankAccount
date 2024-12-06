@@ -31,8 +31,6 @@ Users = {
         "Pin" : 1003
     }
 }
-hi = BankAccount("hi")
-print(hi)
 userbankaccount = None
 while True:
     usernameprompt = input("Enter username: \n")
@@ -48,8 +46,22 @@ while True:
                     print("Your pincode is incorrect. Try again: \n")  
                     continue 
     if userbankaccount == None:
-        print("Username has not been found in the system. Try again: \n")        
-    else:
+        newAccountPrompt = input("Username has not been found in the system. Do you want to create a new account? [y/n]: \n")
+        if newAccountPrompt == "y":
+            newUsernamePrompt = input("Create Username: \n")
+            newPincodePrompt = input("Create pincode")
+            nextAccountNumber = str(len(Users.keys()) + 1)
+            print(nextAccountNumber)
+            Users["User"+nextAccountNumber] = {
+                "Username" : newUsernamePrompt,
+                "Pin" : newPincodePrompt
+            }
+            userbankaccount = BankAccount(Users["User"+nextAccountNumber]["Username"])
+        elif newAccountPrompt == "n":
+            print("Cancelled creation of new account\n")
+        else:
+            print("Invalid repsonse. Cancelled creation of new account")        
+    if userbankaccount != None:
         print("Welcome to your bank account, here are some options you can do:")
         while True:
             ActionPrompt = input("Choose the following:\n1. Deposit \n2. Withdraw \n3. Check Balance \n4. Exit \n")
